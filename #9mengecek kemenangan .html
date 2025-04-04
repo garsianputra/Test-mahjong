@@ -1,0 +1,6 @@
+function checkWin() {
+  if (tiles.every(t => t.matched)) {
+    clearInterval(gameInterval);
+    alert("Selamat! Semua ubin cocok. Skor akhir: " + score);
+  }
+}

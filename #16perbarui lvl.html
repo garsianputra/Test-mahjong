@@ -1,0 +1,18 @@
+function checkWin() {
+  if (tiles.every(t => t.matched)) {
+    clearInterval(gameInterval);
+    alert("Level " + level + " selesai! Skor: " + score);
+
+    // Naik level
+    level++;
+    maxCols += 1;
+    maxRows += 1;
+    timeLeft = 60 - (level * 5); // semakin tinggi level, waktu makin sedikit
+    if (timeLeft < 20) timeLeft = 20;
+
+    createTiles();
+    setTimeout(drawTiles, 500);
+    gameInterval = setInterval(updateTimer, 1000);
+    document.getElementById("timer").innerText = timeLeft;
+  }
+}

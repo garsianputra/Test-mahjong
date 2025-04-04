@@ -1,0 +1,9 @@
+function updateScore() {
+  document.getElementById("score").innerText = score;
+
+  if (score > highScore) {
+    highScore = score;
+    localStorage.setItem("mahjongHighScore", highScore);
+    document.getElementById("highScore").innerText = highScore;
+  }
+}

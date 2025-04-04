@@ -1,0 +1,30 @@
+canvas.addEventListener("click", (e) => {
+  if (timeLeft <= 0) return;
+
+  const x = Math.floor(e.offsetX / TILE_SIZE);
+  const y = Math.floor(e.offsetY / TILE_SIZE);
+  const index = y * COLS + x;
+  const tile = tiles[index];
+
+  if (tile && !tile.matched && selected.length < 2 && !selected.includes(tile)) {
+    selected.push(tile);
+    if (selected.length === 2) {
+      if (selected[0].id === selected[1].id) {
+        selected[0].matched = true;
+        selected[1].matched = true;
+        score += 10;
+      } else {
+        score -= 2;
+      }
+
+      setTimeout(() => {
+        selected = [];
+        drawTiles();
+        updateScore();
+        checkWin();
+      }, 500);
+    }
+  }
+
+  drawTiles();
+});

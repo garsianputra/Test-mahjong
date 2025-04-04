@@ -1,0 +1,18 @@
+if (selected.length === 2) {
+  if (selected[0].id === selected[1].id) {
+    selected[0].matched = true;
+    selected[1].matched = true;
+    score += 10;
+    matchSound.play();
+  } else {
+    score -= 2;
+    wrongSound.play();
+  }
+
+  setTimeout(() => {
+    selected = [];
+    drawTiles();
+    updateScore();
+    checkWin();
+  }, 500);
+}

@@ -1,0 +1,29 @@
+function createTiles() {
+  tiles = [];
+  selected = [];
+
+  const totalTiles = (maxCols * maxRows);
+  const totalPairs = totalTiles / 2;
+  const ids = [];
+
+  for (let i = 0; i < totalPairs; i++) {
+    ids.push(i % images.length, i % images.length); // gunakan ulang gambar jika kurang
+  }
+
+  ids.sort(() => 0.5 - Math.random());
+
+  for (let y = 0; y < maxRows; y++) {
+    for (let x = 0; x < maxCols; x++) {
+      const id = ids.pop();
+      tiles.push({
+        id: id,
+        x: x * TILE_SIZE,
+        y: y * TILE_SIZE,
+        matched: false
+      });
+    }
+  }
+
+  canvas.width = maxCols * TILE_SIZE;
+  canvas.height = maxRows * TILE_SIZE;
+}

@@ -1,0 +1,4 @@
+window.addEventListener("resize", () => {
+  canvas.width = Math.min(window.innerWidth - 40, maxCols * TILE_SIZE);
+  drawTiles();
+});

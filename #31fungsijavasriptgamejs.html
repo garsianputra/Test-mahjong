@@ -1,0 +1,22 @@
+function startGame() {
+  document.getElementById("mainMenu").style.display = "none";
+  document.getElementById("gameControls").style.display = "block";
+  document.getElementById("levelTransition").style.display = "none";
+
+  score = 0;
+  level = 1;
+  maxCols = 6;
+  maxRows = 4;
+  timeLeft = 60;
+
+  updateScore();
+  createTiles();
+  drawTiles();
+  bgm.play();
+  gameInterval = setInterval(updateTimer, 1000);
+}
+
+function restartGame() {
+  clearInterval(gameInterval);
+  startGame();
+}

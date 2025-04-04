@@ -1,0 +1,12 @@
+function updateScore() {
+  document.getElementById("score").innerText = score;
+}
+
+function updateTimer() {
+  timeLeft--;
+  document.getElementById("timer").innerText = timeLeft;
+  if (timeLeft <= 0) {
+    clearInterval(gameInterval);
+    alert("Waktu habis! Skor kamu: " + score);
+  }
+}

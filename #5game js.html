@@ -1,0 +1,77 @@
+const TILE_SIZE = 60;
+const COLS = 6;
+const ROWS = 4;
+let tiles = [];
+let selected = [];
+let images = [];
+
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+function loadImages() {
+  for (let i = 0; i < 6; i++) {
+    const img = new Image();
+    img.src = `img/tile${i}.png`;
+    images.push(img);
+  }
+}
+
+function createTiles() {
+  const ids = [];
+  for (let i = 0; i < (COLS * ROWS) / 2; i++) {
+    ids.push(i, i); // 2 dari setiap jenis
+  }
+
+  ids.sort(() => 0.5 - Math.random()); // Acak
+
+  for (let y = 0; y < ROWS; y++) {
+    for (let x = 0; x < COLS; x++) {
+      const id = ids.pop();
+      tiles.push({
+        id: id,
+        x: x * TILE_SIZE,
+        y: y * TILE_SIZE,
+        matched: false
+      });
+    }
+  }
+}
+
+function drawTiles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (const tile of tiles) {
+    if (!tile.matched) {
+      ctx.drawImage(images[tile.id], tile.x, tile.y, TILE_SIZE, TILE_SIZE);
+      ctx.strokeStyle = "black";
+      ctx.strokeRect(tile.x, tile.y, TILE_SIZE, TILE_SIZE);
+    }
+  }
+}
+
+canvas.addEventListener("click", (e) => {
+  const x = Math.floor(e.offsetX / TILE_SIZE);
+  const y = Math.floor(e.offsetY / TILE_SIZE);
+  const index = y * COLS + x;
+  const tile = tiles[index];
+
+  if (tile && !tile.matched && selected.length < 2 && !selected.includes(tile)) {
+    selected.push(tile);
+    if (selected.length === 2) {
+      if (selected[0].id === selected[1].id) {
+        selected[0].matched = true;
+        selected[1].matched = true;
+      }
+      setTimeout(() => {
+        selected = [];
+        drawTiles();
+      }, 500);
+    }
+  }
+
+  drawTiles();
+});
+
+// Jalankan semua
+loadImages();
+createTiles();
+setTimeout(drawTiles, 500); // tunggu gambar termuat
